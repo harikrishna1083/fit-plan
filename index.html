@@ -11,137 +11,61 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0b150b;
-    --surface: #131f13;
-    --surface2: #1a2b1a;
-    --border: #2a3d2a;
-    --green: #4ade80;
-    --green-dim: #22543d;
-    --green-glow: rgba(74,222,128,0.15);
-    --amber: #fbbf24;
-    --amber-dim: #78350f;
-    --red: #f87171;
-    --text: #e8f5e8;
-    --text-dim: #6b8f6b;
-    --text-muted: #3d5c3d;
-    --run: #38bdf8;
-    --run-dim: #0c4a6e;
-    --rest: #a78bfa;
+    --bg: #0b150b; --surface: #131f13; --surface2: #1a2b1a; --border: #2a3d2a;
+    --green: #4ade80; --green-dim: #22543d; --green-glow: rgba(74,222,128,0.15);
+    --amber: #fbbf24; --amber-dim: #78350f; --red: #f87171;
+    --text: #e8f5e8; --text-dim: #6b8f6b; --text-muted: #3d5c3d;
+    --run: #38bdf8; --run-dim: #0c4a6e; --rest: #a78bfa;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
-
-  /* ── HEADER ── */
   .app-header {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(11,21,11,0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 20px 12px;
+    background: rgba(11,21,11,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border); padding: 14px 20px 12px;
   }
   .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .app-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; color: var(--green); letter-spacing: -0.5px; }
-  .race-badge {
-    background: linear-gradient(135deg, var(--amber-dim), #92400e);
-    border: 1px solid var(--amber);
-    border-radius: 20px; padding: 4px 12px;
-    font-size: 11px; font-weight: 500; color: var(--amber);
-    letter-spacing: 0.3px;
-  }
-
-  /* day nav */
+  .race-badge { background: linear-gradient(135deg, var(--amber-dim), #92400e); border: 1px solid var(--amber); border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 500; color: var(--amber); }
   .day-nav { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
   .day-nav::-webkit-scrollbar { display: none; }
-  .day-btn {
-    flex-shrink: 0; border: 1px solid var(--border); background: var(--surface);
-    border-radius: 10px; padding: 6px 10px; cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-dim);
-    transition: all 0.2s; text-align: center; min-width: 44px;
-  }
+  .day-btn { flex-shrink: 0; border: 1px solid var(--border); background: var(--surface); border-radius: 10px; padding: 6px 10px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--text-dim); transition: all 0.2s; text-align: center; min-width: 44px; }
   .day-btn .day-label { font-weight: 600; display: block; font-size: 12px; }
   .day-btn .day-type { font-size: 9px; margin-top: 1px; display: block; }
   .day-btn.active { background: var(--green-glow); border-color: var(--green); color: var(--green); }
   .day-btn.today-dot { position: relative; }
   .day-btn.today-dot::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: var(--amber); }
-
-  /* ── MAIN SCROLL ── */
   .main { padding: 16px; max-width: 480px; margin: 0 auto; padding-bottom: 100px; }
-
-  /* day hero */
-  .day-hero {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 18px; padding: 20px;
-    margin-bottom: 16px; position: relative; overflow: hidden;
-  }
-  .day-hero::before {
-    content: ''; position: absolute; top: -30px; right: -30px;
-    width: 120px; height: 120px; border-radius: 50%;
-    background: var(--green-glow); pointer-events: none;
-  }
+  .day-hero { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 20px; margin-bottom: 16px; position: relative; overflow: hidden; }
+  .day-hero::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: var(--green-glow); pointer-events: none; }
   .hero-date { font-size: 12px; color: var(--text-dim); font-weight: 500; margin-bottom: 4px; }
   .hero-day { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--text); letter-spacing: -1px; }
   .hero-tags { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-  .tag {
-    border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 4px;
-  }
+  .tag { border-radius: 8px; padding: 4px 10px; font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
   .tag-gym { background: var(--green-glow); color: var(--green); border: 1px solid var(--green-dim); }
   .tag-run { background: rgba(56,189,248,0.12); color: var(--run); border: 1px solid var(--run-dim); }
-  .tag-rest { background: rgba(167,139,250,0.1); color: var(--rest); border: 1px solid #4c3780; }
-
-  /* progress bar */
   .progress-wrap { margin-top: 14px; }
   .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-bottom: 6px; }
   .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), #86efac); border-radius: 3px; transition: width 0.5s ease; }
-
-  /* ── SECTIONS ── */
   .section { margin-bottom: 16px; }
-  .section-header {
-    display: flex; align-items: center; gap: 8px;
-    font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase;
-    color: var(--text-dim); margin-bottom: 10px;
-  }
+  .section-header { display: flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
   .section-header::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-  .section-icon { font-size: 14px; }
-
-  /* cards */
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 14px; padding: 14px 16px; margin-bottom: 8px;
-    display: flex; gap: 12px; align-items: flex-start;
-    transition: all 0.2s; cursor: pointer; position: relative;
-  }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; transition: all 0.2s; cursor: pointer; }
   .card:active { transform: scale(0.98); }
   .card.checked { opacity: 0.55; }
   .card.checked .card-title { text-decoration: line-through; }
-
-  .check-box {
-    width: 22px; height: 22px; border-radius: 6px;
-    border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; background: var(--surface2);
-  }
+  .check-box { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: var(--surface2); }
   .card.checked .check-box { background: var(--green); border-color: var(--green); }
   .check-icon { display: none; color: #000; font-size: 13px; font-weight: 700; }
   .card.checked .check-icon { display: block; }
-
   .card-body { flex: 1; min-width: 0; }
   .card-time { font-size: 10px; color: var(--text-dim); font-weight: 500; margin-bottom: 2px; letter-spacing: 0.3px; }
   .card-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.3; }
   .card-sub { font-size: 12px; color: var(--text-dim); margin-top: 4px; line-height: 1.5; }
   .card-detail { font-size: 11px; color: var(--text-muted); margin-top: 5px; font-style: italic; }
-
-  /* exercise card */
-  .exercise-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; padding: 12px 14px; margin-bottom: 6px;
-    display: flex; align-items: center; gap: 12px; cursor: pointer;
-    transition: all 0.2s;
-  }
+  .card-swap { font-size: 11px; color: var(--amber); margin-top: 4px; }
+  .exercise-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; margin-bottom: 6px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: all 0.2s; }
   .exercise-card:active { transform: scale(0.98); }
   .exercise-card.checked { opacity: 0.5; }
   .exercise-card.checked .ex-name { text-decoration: line-through; }
@@ -149,74 +73,23 @@
   .ex-info { flex: 1; }
   .ex-name { font-size: 13px; font-weight: 600; color: var(--text); }
   .ex-sets { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-  .ex-check { width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--border); background: var(--surface2); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .ex-check { width: 20px; height: 20px; border-radius: 5px; border: 2px solid var(--border); background: var(--surface2); display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 11px; color: #000; }
   .exercise-card.checked .ex-check { background: var(--green); border-color: var(--green); }
-
-  /* tip card */
-  .tip-card {
-    background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.03));
-    border: 1px solid rgba(251,191,36,0.25);
-    border-radius: 12px; padding: 12px 14px; margin-top: 4px;
-    font-size: 12px; color: #d97706; line-height: 1.5;
-  }
-
-  /* rest day */
-  .rest-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 18px; padding: 30px 20px; text-align: center; margin: 20px 0;
-  }
-  .rest-emoji { font-size: 48px; margin-bottom: 12px; }
-  .rest-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px; color: var(--rest); margin-bottom: 8px; }
-  .rest-sub { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
-
-  /* ── BOTTOM BAR ── */
-  .bottom-bar {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(11,21,11,0.95);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    padding: 12px 20px 28px;
-    display: flex; gap: 10px; max-width: 480px; margin: 0 auto;
-  }
-  .notif-btn {
-    flex: 1; background: var(--green); color: #000;
-    border: none; border-radius: 14px; padding: 14px;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
-    cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px;
-  }
+  .tip-card { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(251,191,36,0.03)); border: 1px solid rgba(251,191,36,0.25); border-radius: 12px; padding: 12px 14px; margin-top: 4px; font-size: 12px; color: #d97706; line-height: 1.5; }
+  .protein-bar { background: linear-gradient(135deg, rgba(74,222,128,0.08), rgba(74,222,128,0.03)); border: 1px solid var(--green-dim); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; }
+  .protein-bar-title { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; font-weight: 500; }
+  .protein-amounts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .p-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--green); font-weight: 600; }
+  .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(11,21,11,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border); padding: 12px 20px 28px; display: flex; gap: 10px; max-width: 480px; margin: 0 auto; }
+  .notif-btn { flex: 1; background: var(--green); color: #000; border: none; border-radius: 14px; padding: 14px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s; }
   .notif-btn:active { transform: scale(0.97); }
   .notif-btn.enabled { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
-  .reset-btn {
-    background: var(--surface2); color: var(--text-dim);
-    border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px;
-    font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px;
-    cursor: pointer; transition: all 0.2s;
-  }
-
-  /* toast */
-  .toast {
-    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--surface2); border: 1px solid var(--green);
-    color: var(--green); padding: 10px 20px; border-radius: 30px;
-    font-size: 13px; font-weight: 500; opacity: 0;
-    transition: all 0.3s; z-index: 999; white-space: nowrap;
-  }
+  .reset-btn { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--surface2); border: 1px solid var(--green); color: var(--green); padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 999; white-space: nowrap; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* install banner */
-  .install-banner {
-    background: linear-gradient(135deg, rgba(74,222,128,0.1), rgba(74,222,128,0.05));
-    border: 1px solid var(--green-dim); border-radius: 14px;
-    padding: 14px 16px; margin-bottom: 16px; display: none;
-  }
-  .install-banner.visible { display: block; }
-  .install-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; color: var(--green); margin-bottom: 4px; }
-  .install-steps { font-size: 12px; color: var(--text-dim); line-height: 1.8; }
-  .install-steps span { color: var(--text); font-weight: 500; }
 </style>
 </head>
 <body>
-
 <header class="app-header">
   <div class="header-top">
     <div class="app-title">FitPlan 🌿</div>
@@ -224,25 +97,60 @@
   </div>
   <div class="day-nav" id="dayNav"></div>
 </header>
-
 <main class="main" id="mainContent"></main>
-
 <div class="bottom-bar">
   <button class="notif-btn" id="notifBtn" onclick="handleNotif()">🔔 Enable Daily Reminder</button>
   <button class="reset-btn" onclick="resetDay()">↺ Reset</button>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
-// ── DATA ─────────────────────────────────────────────────────────────────────
+// ── MEALS (your actual routine, updated) ──────────────────────────────────────
+const MEALS_GYM = [
+  { time: '7:30 AM', title: 'Wake Up', sub: 'Warm water + 2 dates', detail: 'Dates = fast fuel before gym. Drink 500ml warm water.' },
+  { time: '9:15 AM', title: 'Gym Session', sub: 'Train hard — 9:15 to 10:30 AM', detail: 'Sip water throughout. No food needed during session.' },
+  { time: '10:45 AM', title: 'Post-Gym Protein Shake', sub: '1 scoop whey protein in water or milk', detail: '⚡ Most important window — drink within 30 mins of finishing gym' },
+  { time: '11:15 AM', title: 'Breakfast', sub: 'Your oat muffin + 1 fruit (apple/papaya)', detail: '✅ Muffin is fine — oats, seeds, apricots are good. Skip the cashews here, save for later.\n⚡ OPTIONAL: Add 2–3 eggs scrambled (+24g protein boost)' },
+  { time: '12:00 PM', title: 'Coffee', sub: 'Black coffee or with a small splash of milk', detail: 'Keep sugar-free. Green tea is fine too.' },
+  { time: '1:30 PM', title: 'Lunch', sub: '70g quinoa + 130g chicken + 150g curd + 10g chia seeds', detail: '↑ Bump chicken from 100g to 130g — you need more protein\n🔄 Swap: Dal + sabzi on non-chicken days' },
+  { time: '4:30 PM', title: 'Evening Snack', sub: '1 fruit (apple, orange, or papaya) + small handful cashews', detail: '🔄 Replace crackers with fruit. Fruit = fibre + natural sugar. Much better.' },
+  { time: '5:00 PM', title: 'Green Tea', sub: 'Plain green tea — no sugar', detail: 'Good for metabolism and belly fat reduction' },
+  { time: '8:00 PM', title: 'Dinner', sub: '130g chicken OR dosa (150g batter) with coconut chutney', detail: 'Dosa nights: add sambar or dal on the side for protein\nChicken nights: 1 roti is fine — keep it whole wheat' },
+  { time: '10:00 PM', title: 'Before Bed ⭐', sub: '150g hung curd / Greek yogurt OR warm haldi milk', detail: 'You are currently skipping this — DO NOT skip!\nCasein protein from curd repairs muscles all night. Critical at age 42.' },
+];
+
+const MEALS_RUN = [
+  { time: '7:30 AM', title: 'Wake Up', sub: 'Warm water + 2 dates', detail: 'Light fuel before running. Eat 30–45 mins before you start.' },
+  { time: '8:15 AM', title: 'Run Session', sub: 'Follow Runna plan', detail: 'Sip water. Pinch of salt + lemon in 500ml for longer runs.' },
+  { time: '9:30 AM', title: 'Post-Run Protein', sub: '1 scoop whey protein + 1 fruit', detail: '⚡ Eat within 45 mins of finishing. Critical recovery window.' },
+  { time: '10:15 AM', title: 'Breakfast', sub: 'Your oat muffin + hung curd 150g', detail: 'OPTIONAL: 2–3 eggs scrambled for extra protein boost' },
+  { time: '12:00 PM', title: 'Coffee / Green Tea', sub: 'Black or light milk — no sugar', detail: 'Good caffeine timing — 2-3 hrs after running' },
+  { time: '1:30 PM', title: 'Lunch', sub: '70g quinoa + 130g chicken + 150g curd + chia seeds', detail: '🔄 Swap: Dal + sabzi + extra curd on non-chicken days' },
+  { time: '4:30 PM', title: 'Evening Snack', sub: '1 fruit + small handful cashews (10–12 pieces)', detail: 'Ditch the crackers — fruit gives natural energy + fibre' },
+  { time: '5:00 PM', title: 'Green Tea', sub: 'Plain — no sugar', detail: '' },
+  { time: '8:00 PM', title: 'Dinner', sub: '130g chicken OR dosa (150g batter) + coconut chutney + sambar', detail: 'Run days: add sambar/dal alongside dosa for protein\nGoat meat is a great swap 2–3x per week' },
+  { time: '10:00 PM', title: 'Before Bed ⭐', sub: '150g hung curd OR warm haldi milk', detail: 'Especially important on run days — inflammation recovery happens overnight' },
+];
+
+const MEALS_LONG_RUN = [
+  { time: '7:30 AM', title: 'Wake Up', sub: 'Warm water + 3 dates (extra today)', detail: 'Long run needs more carb fuel. Eat 45 mins before start.' },
+  { time: '8:15 AM', title: 'Long Run', sub: 'Follow Runna plan — longest of week', detail: 'Carry water. For runs over 8 miles, take 1–2 dates or energy gel mid-run.' },
+  { time: '10:00 AM', title: 'Post-Run Recovery', sub: '1 scoop whey protein + 1 banana or fruit', detail: '⚡ Do not skip — this is the most critical meal of your week.' },
+  { time: '10:45 AM', title: 'Breakfast (Bigger today)', sub: 'Your oat muffin + hung curd 150g + 1 extra fruit', detail: 'OPTIONAL: 2–3 eggs for extra protein. Long run = more food today.' },
+  { time: '1:30 PM', title: 'Lunch (Bigger carbs today)', sub: '90g quinoa (extra) + 130g chicken + 150g curd + chia seeds', detail: 'Slightly larger carb portion — glycogen fully depleted from long run' },
+  { time: '4:30 PM', title: 'Evening Snack', sub: '1 fruit + cashews + 1 extra date', detail: 'Extra fuel today — your body is still recovering' },
+  { time: '5:00 PM', title: 'Green Tea', sub: 'Plain green tea', detail: '' },
+  { time: '8:00 PM', title: 'Dinner', sub: '130g chicken + 1 roti OR dosa + coconut chutney + sambar', detail: 'Add sambar/dal — omega-3 fish is ideal on long run nights if possible' },
+  { time: '10:00 PM', title: 'Before Bed ⭐ (Critical)', sub: '150g hung curd + pinch of haldi', detail: 'Do NOT skip tonight. Muscle repair for long run happens 90% during sleep.' },
+];
+
+// ── PLAN ──────────────────────────────────────────────────────────────────────
 const PLAN = {
-  0: { // Sunday
+  0: {
     name: 'Sunday', emoji: '🌤',
     tags: [{label:'💪 Strength + Core', cls:'tag-gym'}],
     gym: {
       title: 'Full Body Light + Core',
-      note: 'Keep this session energising, not exhausting. 40 mins max. Low weight, controlled form.',
+      note: '40 mins max. Low weight, controlled form. Energising — not exhausting.',
       exercises: [
         { name: 'Goblet Squats', sets: '3 sets × 12 reps', note: 'Light weight, controlled tempo' },
         { name: 'Push-ups', sets: '3 sets × 15 reps', note: 'Chest to floor, full range' },
@@ -252,17 +160,10 @@ const PLAN = {
         { name: 'Bicycle Crunches', sets: '3 sets × 20 reps', note: 'Targets belly fat area' },
       ]
     },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Workout', sub: '2–3 dates + 150g Greek yogurt / hung curd', detail: 'Black coffee optional — boosts endurance' },
-      { time: '8:30 AM', title: 'Breakfast', sub: '2–3 Moong Dal Chilla + hung curd on side', detail: 'OPTIONAL: 3 eggs scrambled with veggies + 2 rotis (~24g protein)' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts (almonds + walnuts) + 1 fruit', detail: 'Apple, papaya, or orange — keeps energy stable' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g chicken + 100g brown rice or 2 rotis + dal + sabzi', detail: 'Biggest carb meal of the day' },
-      { time: '4:30 PM', title: 'Post-Workout Snack', sub: '30g whey protein OR 100g paneer with chaat masala', detail: 'Within 60 mins of workout' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g fish (rohu/surmai/salmon) + 2 rotis + vegetable curry', detail: 'Lighter on carbs than lunch. Omega-3s reduce inflammation.' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Casein protein repairs muscles overnight' },
-    ]
+    meals: MEALS_GYM,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   },
-  1: { // Monday
+  1: {
     name: 'Monday', emoji: '🔥',
     tags: [{label:'💪 Upper Body', cls:'tag-gym'}],
     gym: {
@@ -276,45 +177,24 @@ const PLAN = {
         { name: 'Bicep Curl', sets: '3 sets × 12 reps', note: 'Controlled tempo, no swinging' },
       ]
     },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Workout', sub: '2–3 dates + 150g Greek yogurt / hung curd', detail: 'Black coffee optional — boosts performance' },
-      { time: '8:30 AM', title: 'Breakfast', sub: '2–3 Moong Dal Chilla + hung curd on side', detail: 'OPTIONAL: 3 eggs scrambled with veggies + 2 rotis' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Apple, papaya, or orange' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g chicken + 100g brown rice or 2 rotis + dal + sabzi', detail: 'Biggest carb meal of the day' },
-      { time: '4:30 PM', title: 'Post-Workout Snack', sub: '30g whey protein OR 100g paneer', detail: 'Muscle synthesis peaks within 60 mins post-workout' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g fish + 2 rotis + vegetable curry or salad', detail: 'Fish gives omega-3s — reduces training inflammation' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Casein protein repairs muscles overnight' },
-    ]
+    meals: MEALS_GYM,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   },
-  2: { // Tuesday
+  2: {
     name: 'Tuesday', emoji: '🏃',
     tags: [{label:'🏃 Run Day', cls:'tag-run'}],
-    run: { title: 'Easy / Moderate Run', note: 'Follow Runna plan. Easy conversational pace — you should be able to hold a full conversation. ~3.5 miles.' },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Run', sub: '2–3 dates + 150g Greek yogurt', detail: 'Eat 30–45 mins before running. Light stomach.' },
-      { time: '8:30 AM', title: 'Breakfast (Post-run)', sub: '2–3 Moong Dal Chilla + hung curd', detail: 'OPTIONAL: 3 eggs scrambled + 2 rotis. Eat within 60 mins of finishing run.' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Recovery nutrition — keep it consistent' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g chicken + 100g brown rice or 2 rotis + dal + sabzi', detail: 'Replenish glycogen after morning run' },
-      { time: '4:30 PM', title: 'Afternoon Snack', sub: '30g whey protein OR 100g paneer', detail: 'Keeps protein high through the day' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g goat meat (keema or curry) + 2 rotis + sabzi', detail: 'Goat meat — lean, high iron, great for runners' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Haldi reduces inflammation from running' },
-    ]
+    run: { title: 'Easy / Moderate Run', note: 'Follow Runna plan. Easy conversational pace — hold a full conversation. ~3.5 miles.' },
+    meals: MEALS_RUN,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   },
-  3: { // Wednesday
+  3: {
     name: 'Wednesday', emoji: '⚡',
     tags: [{label:'🏃 Long Run', cls:'tag-run'}],
-    run: { title: 'Longest Run of the Week', note: 'Follow Runna plan. Keep pace comfortable and easy. This is your most important run — no gym today. Start at 4–5 miles, build to 12 miles by Week 8.' },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Run (Important!)', sub: '2–3 dates + 150g Greek yogurt + extra banana if available', detail: 'Long run needs more fuel. Eat 45 mins before.' },
-      { time: 'After run', title: 'Recovery Breakfast', sub: '2–3 Moong Dal Chilla + hung curd + 1 fruit', detail: 'OPTIONAL: 3 eggs + 2 rotis. Post long-run recovery window is critical — eat within 45 mins.' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Extra carbs okay today — you burned a lot' },
-      { time: '1:00 PM', title: 'Lunch (Bigger today)', sub: '150g chicken + 150g brown rice or 3 rotis + dal + sabzi', detail: 'Slightly larger carb portion to fully replenish glycogen' },
-      { time: '4:30 PM', title: 'Afternoon Snack', sub: '30g whey protein OR 100g paneer', detail: 'Keep protein coming in throughout the day' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g fish + 2 rotis + vegetable curry', detail: 'Omega-3s are especially important after long run' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Do not skip tonight — long run recovery happens during sleep' },
-    ]
+    run: { title: 'Longest Run of the Week', note: 'Follow Runna plan. Easy pace throughout. No gym today. Build from 5 miles now to 12 miles by Week 8.' },
+    meals: MEALS_LONG_RUN,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 11g', 'Total ~130g']
   },
-  4: { // Thursday
+  4: {
     name: 'Thursday', emoji: '🦵',
     tags: [{label:'💪 Lower Body', cls:'tag-gym'}],
     gym: {
@@ -328,36 +208,22 @@ const PLAN = {
         { name: 'Glute Bridges', sets: '3 sets × 15 reps', note: 'Activates glutes for better running form' },
       ]
     },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Workout', sub: '2–3 dates + 150g Greek yogurt', detail: 'Fuel for legs day' },
-      { time: '8:30 AM', title: 'Breakfast', sub: '2–3 Moong Dal Chilla + hung curd', detail: 'OPTIONAL: 3 eggs scrambled + 2 rotis' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Sustained energy through morning' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g goat meat keema or curry + 2 rotis + dal + sabzi', detail: 'Goat meat iron helps muscle recovery after leg day' },
-      { time: '4:30 PM', title: 'Post-Workout Snack', sub: '30g whey protein OR 100g paneer', detail: 'Leg recovery — protein within 60 mins' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g chicken + 2 rotis + vegetable curry', detail: 'Light dinner, tomorrow is run day' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Muscle repair while you sleep' },
-    ]
+    meals: MEALS_GYM,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   },
-  5: { // Friday
+  5: {
     name: 'Friday', emoji: '💨',
     tags: [{label:'🏃 Tempo Run', cls:'tag-run'}],
-    run: { title: 'Tempo / Interval Run', note: 'Follow Runna plan. This is a faster-paced run — comfortably hard. You should be breathing heavily but not sprinting. ~3.5 miles.' },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Run', sub: '2–3 dates + 150g Greek yogurt', detail: 'Eat 30–45 mins before. Keep it light for tempo run.' },
-      { time: '8:30 AM', title: 'Breakfast (Post-run)', sub: '2–3 Moong Dal Chilla + hung curd', detail: 'OPTIONAL: 3 eggs + 2 rotis. Eat within 60 mins of finishing.' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Recovery snack' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g fish + 100g brown rice or 2 rotis + dal + sabzi', detail: 'Fish on run days — omega-3s fight inflammation' },
-      { time: '4:30 PM', title: 'Afternoon Snack', sub: '30g whey protein OR 100g paneer', detail: 'Keep protein consistent' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g chicken + 2 rotis + vegetable curry', detail: 'Light carbs at dinner, tomorrow is gym day' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Wind down and recover well' },
-    ]
+    run: { title: 'Tempo / Interval Run', note: 'Follow Runna plan. Comfortably hard pace — breathing heavy but not sprinting. ~3.5 miles.' },
+    meals: MEALS_RUN,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   },
-  6: { // Saturday
+  6: {
     name: 'Saturday', emoji: '💪',
     tags: [{label:'💪 Upper Body', cls:'tag-gym'}],
     gym: {
       title: 'Upper Body — Volume',
-      note: 'Lighter than Monday, more reps. Focus on the pump and muscle fatigue. 45 mins, keep moving.',
+      note: 'Lighter than Monday, more reps. Focus on the pump. 45 mins, keep moving.',
       exercises: [
         { name: 'Incline Dumbbell Press', sets: '3 sets × 12 reps', note: 'Lighter than Monday, controlled' },
         { name: 'Cable / Dumbbell Rows', sets: '4 sets × 12 reps', note: 'Builds back thickness' },
@@ -366,29 +232,17 @@ const PLAN = {
         { name: 'Tricep Dips / Pushdown', sets: '3 sets × 12 reps', note: 'Superset with biceps if short on time' },
       ]
     },
-    meals: [
-      { time: '6:30 AM', title: 'Pre-Workout', sub: '2–3 dates + 150g Greek yogurt', detail: 'Saturday energy — let\'s go!' },
-      { time: '8:30 AM', title: 'Breakfast', sub: 'Paneer bhurji 100g + 2 rotis', detail: 'OPTIONAL: 3 eggs scrambled with veggies + 2 rotis. Change it up from chilla.' },
-      { time: '11:00 AM', title: 'Mid-Morning Snack', sub: '20g mixed nuts + 1 fruit', detail: 'Sustained energy' },
-      { time: '1:00 PM', title: 'Lunch', sub: '150g chicken + 100g brown rice or 2 rotis + dal + sabzi', detail: 'Main fuel for the day' },
-      { time: '4:30 PM', title: 'Post-Workout Snack', sub: '30g whey protein OR 100g paneer', detail: 'Protein within 60 mins' },
-      { time: '7:30 PM', title: 'Dinner', sub: '150g goat meat (Sunday prep) + 2 rotis + sabzi', detail: 'Goat meat 2–3x per week — high protein, high iron' },
-      { time: '9:30 PM', title: 'Before Bed', sub: '150g hung curd OR warm haldi milk', detail: 'Overnight muscle repair' },
-    ]
+    meals: MEALS_GYM,
+    protein: ['Whey 25g', 'Chicken 32g', 'Curd 12g', 'Quinoa 9g', 'Muffin 6g', 'Total ~130g']
   }
 };
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let currentDay = new Date().getDay();
 let checked = {};
-
 function storageKey(day) { return `fitplan_checked_d${day}`; }
-function loadChecked(day) {
-  try { return JSON.parse(localStorage.getItem(storageKey(day)) || '{}'); } catch { return {}; }
-}
-function saveChecked(day, data) {
-  try { localStorage.setItem(storageKey(day), JSON.stringify(data)); } catch {}
-}
+function loadChecked(day) { try { return JSON.parse(localStorage.getItem(storageKey(day)) || '{}'); } catch { return {}; } }
+function saveChecked(day, data) { try { localStorage.setItem(storageKey(day), JSON.stringify(data)); } catch {} }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function renderDayNav() {
@@ -397,9 +251,8 @@ function renderDayNav() {
   const today = new Date().getDay();
   nav.innerHTML = dayNames.map((d, i) => {
     const plan = PLAN[i];
-    const typeIcon = plan.gym ? '💪' : plan.run ? '🏃' : '😴';
-    return `<button class="day-btn ${i === currentDay ? 'active' : ''} ${i === today ? 'today-dot' : ''}"
-      onclick="switchDay(${i})">
+    const typeIcon = plan.gym && plan.run ? '💪🏃' : plan.gym ? '💪' : plan.run ? '🏃' : '😴';
+    return `<button class="day-btn ${i === currentDay ? 'active' : ''} ${i === today ? 'today-dot' : ''}" onclick="switchDay(${i})">
       <span class="day-label">${d}</span>
       <span class="day-type">${typeIcon}</span>
     </button>`;
@@ -423,19 +276,9 @@ function renderDay(dayIdx) {
   const today = new Date();
   const dateStr = dayIdx === new Date().getDay()
     ? `Today, ${today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}`
-    : `${plan.name}`;
+    : plan.name;
 
   let html = '';
-
-  // install banner
-  html += `<div class="install-banner" id="installBanner">
-    <div class="install-title">📱 Add to iPhone Home Screen</div>
-    <div class="install-steps">
-      1. Tap the <span>Share button</span> (□↑) in Safari<br>
-      2. Scroll down and tap <span>"Add to Home Screen"</span><br>
-      3. Tap <span>Add</span> — done! Opens like a real app
-    </div>
-  </div>`;
 
   // hero
   html += `<div class="day-hero">
@@ -448,10 +291,16 @@ function renderDay(dayIdx) {
     </div>
   </div>`;
 
+  // protein summary
+  html += `<div class="protein-bar">
+    <div class="protein-bar-title">⚡ Protein sources today</div>
+    <div class="protein-amounts">${plan.protein.map(p => `<span class="p-chip">${p}</span>`).join('')}</div>
+  </div>`;
+
   // gym section
   if (plan.gym) {
     html += `<div class="section">
-      <div class="section-header"><span class="section-icon">💪</span> Gym — ${plan.gym.title}</div>
+      <div class="section-header"><span>💪</span> Gym — ${plan.gym.title}</div>
       <div class="tip-card">💡 ${plan.gym.note}</div>`;
     plan.gym.exercises.forEach((ex, i) => {
       const key = `gym_${i}`;
@@ -471,7 +320,7 @@ function renderDay(dayIdx) {
   // run section
   if (plan.run) {
     html += `<div class="section">
-      <div class="section-header"><span class="section-icon">🏃</span> Running</div>
+      <div class="section-header"><span>🏃</span> Running</div>
       <div class="card ${checked['run'] ? 'checked' : ''}" onclick="toggleCheck('run', this)">
         <div class="check-box"><span class="check-icon">✓</span></div>
         <div class="card-body">
@@ -484,35 +333,31 @@ function renderDay(dayIdx) {
   }
 
   // meals section
-  html += `<div class="section">
-    <div class="section-header"><span class="section-icon">🍽️</span> Meals</div>`;
+  html += `<div class="section"><div class="section-header"><span>🍽️</span> Meals & Schedule</div>`;
   plan.meals.forEach((meal, i) => {
     const key = `meal_${i}`;
     const ck = checked[key] ? 'checked' : '';
+    const lines = meal.sub.split('\n');
+    const detailLines = meal.detail ? meal.detail.split('\n') : [];
     html += `<div class="card ${ck}" onclick="toggleCheck('${key}', this)">
       <div class="check-box"><span class="check-icon">✓</span></div>
       <div class="card-body">
         <div class="card-time">${meal.time}</div>
         <div class="card-title">${meal.title}</div>
-        <div class="card-sub">${meal.sub}</div>
-        ${meal.detail ? `<div class="card-detail">${meal.detail}</div>` : ''}
+        ${lines.map((l,li) => `<div class="${li===0?'card-sub':'card-swap'}">${l}</div>`).join('')}
+        ${detailLines.map(l => `<div class="card-detail">${l}</div>`).join('')}
       </div>
     </div>`;
   });
   html += `</div>`;
 
-  // water reminder
+  // water
   html += `<div class="tip-card" style="margin-bottom:16px">
-    💧 Drink 3–3.5 litres of water today${plan.run ? '. Add pinch of salt + lemon squeeze to 500ml for natural electrolytes.' : '.'}
+    💧 3–3.5 litres of water today.${plan.run ? ' Add pinch of salt + lemon to 500ml bottle for runs.' : ''}
+    &nbsp; Start with 500ml warm water at 7:30 AM.
   </div>`;
 
   main.innerHTML = html;
-
-  // show install banner on first visit
-  if (!localStorage.getItem('fitplan_installed')) {
-    document.getElementById('installBanner').classList.add('visible');
-  }
-
   updateProgress(dayIdx);
 }
 
@@ -533,11 +378,10 @@ function toggleCheck(key, el) {
   checked[key] = !checked[key];
   saveChecked(currentDay, checked);
   el.classList.toggle('checked', checked[key]);
-  // update check indicator
   const box = el.querySelector('.check-box, .ex-check');
   if (box) box.innerHTML = checked[key] ? '✓' : '';
   updateProgress(currentDay);
-  if (checked[key]) showToast('✓ Marked complete!');
+  if (checked[key]) showToast('✓ Done!');
 }
 
 function switchDay(dayIdx) {
@@ -560,7 +404,7 @@ let notifEnabled = localStorage.getItem('fitplan_notif') === 'true';
 function updateNotifBtn() {
   const btn = document.getElementById('notifBtn');
   if (notifEnabled) {
-    btn.textContent = '🔔 Reminder set for 6:30 AM ✓';
+    btn.textContent = '🔔 Reminder set — 8:30 AM ✓';
     btn.classList.add('enabled');
   } else {
     btn.textContent = '🔔 Enable Daily Reminder';
@@ -576,53 +420,65 @@ async function handleNotif() {
     showToast('Reminders turned off');
     return;
   }
-
-  if (!('Notification' in window)) {
-    showToast('⚠️ Add to Home Screen first for notifications');
-    document.getElementById('installBanner').classList.add('visible');
-    return;
-  }
-
-  const perm = await Notification.requestPermission();
-  if (perm === 'granted') {
-    notifEnabled = true;
-    localStorage.setItem('fitplan_notif', 'true');
-    localStorage.setItem('fitplan_installed', 'true');
-    document.getElementById('installBanner').classList.remove('visible');
-    updateNotifBtn();
-    scheduleNotifications();
-    showToast('🔔 Daily reminder set for 6:30 AM!');
-    // fire test notification
-    setTimeout(() => {
-      const today = PLAN[new Date().getDay()];
-      new Notification('FitPlan 🌿 — Good Morning!', {
-        body: `Today: ${today.tags[0].label.replace(/[💪🏃]/g,'')} · Check your plan!`,
-        icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🌿</text></svg>'
-      });
-    }, 1500);
-  } else {
-    showToast('⚠️ Notification permission denied in settings');
-  }
+  if (!('Notification' in window)) { showIOSFallback(); return; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm === 'granted') {
+      notifEnabled = true;
+      localStorage.setItem('fitplan_notif', 'true');
+      updateNotifBtn();
+      scheduleNotifications();
+      showToast('🔔 Daily reminder set for 8:30 AM!');
+      setTimeout(() => {
+        const today = PLAN[new Date().getDay()];
+        new Notification(`FitPlan 🌿 — ${today.emoji} ${today.name}`, {
+          body: `${today.tags[0].label.replace(/[💪🏃😴]/g,'').trim()} day! Check your plan. 💧 Start hydrating now.`
+        });
+      }, 1500);
+    } else { showIOSFallback(); }
+  } catch(e) { showIOSFallback(); }
 }
 
 function scheduleNotifications() {
   if (!notifEnabled || Notification.permission !== 'granted') return;
   const now = new Date();
   const next = new Date();
-  next.setHours(6, 30, 0, 0);
+  next.setHours(8, 30, 0, 0); // 8:30 AM
   if (next <= now) next.setDate(next.getDate() + 1);
   const ms = next - now;
   setTimeout(() => {
     const today = PLAN[new Date().getDay()];
     new Notification(`FitPlan 🌿 — ${today.emoji} ${today.name}`, {
-      body: `${today.tags[0].label.replace(/[💪🏃😴]/g,'').trim()} day! Open your plan. 💧 Start hydrating now.`,
-      icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🌿</text></svg>'
+      body: `${today.tags[0].label.replace(/[💪🏃😴]/g,'').trim()} day! Open your plan. 💧 Warm water first.`
     });
     setInterval(scheduleNotifications, 86400000);
   }, ms);
 }
 
-// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showIOSFallback() {
+  const main = document.getElementById('mainContent');
+  const existing = document.getElementById('iosFallback');
+  if (existing) { existing.remove(); return; }
+  const div = document.createElement('div');
+  div.id = 'iosFallback';
+  div.style.cssText = `background:linear-gradient(135deg,rgba(251,191,36,0.1),rgba(251,191,36,0.05));border:1px solid rgba(251,191,36,0.4);border-radius:16px;padding:16px;margin:0 0 16px;font-family:'DM Sans',sans-serif;`;
+  div.innerHTML = `
+    <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:#fbbf24;margin-bottom:10px">📱 Set Up 8:30 AM Daily Reminder — Shortcuts App</div>
+    <div style="font-size:12px;color:#92a892;line-height:2">
+      <b style="color:#e8f5e8">1.</b> Open <b style="color:#e8f5e8">Shortcuts</b> app on iPhone<br>
+      <b style="color:#e8f5e8">2.</b> Tap <b style="color:#e8f5e8">Automation</b> tab → <b style="color:#e8f5e8">+</b> → <b style="color:#e8f5e8">Personal Automation</b><br>
+      <b style="color:#e8f5e8">3.</b> Tap <b style="color:#e8f5e8">Time of Day</b> → set <b style="color:#4ade80">8:30 AM</b> → Daily → Next<br>
+      <b style="color:#e8f5e8">4.</b> Search <b style="color:#e8f5e8">"Show Notification"</b> → tap it<br>
+      <b style="color:#e8f5e8">5.</b> Title: <b style="color:#4ade80">FitPlan 🌿</b> · Body: <b style="color:#4ade80">Check today's plan!</b><br>
+      <b style="color:#e8f5e8">6.</b> Next → turn <b style="color:#f87171">OFF</b> "Ask Before Running" → <b style="color:#e8f5e8">Done</b>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:#4ade80">✓ Fires every morning at 8:30 AM — after your sleep mode ends at 7 AM</div>
+  `;
+  main.insertBefore(div, main.firstChild);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  showToast('📋 Shortcut setup guide shown ↑');
+}
+
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
