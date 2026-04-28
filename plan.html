@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Hari's Recomp Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Satoshi:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c28;
+    --border: #2a2a3d;
+    --accent: #6c63ff;
+    --accent2: #ff6584;
+    --accent3: #43e97b;
+    --accent4: #f7971e;
+    --text: #f0f0f8;
+    --text2: #9090b0;
+    --text3: #5a5a7a;
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Satoshi', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    padding-bottom: 90px;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    padding: 60px 24px 24px;
+    background: linear-gradient(180deg, #1a1030 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -40px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(108,99,255,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: var(--accent); }
+  .header p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+
+  /* Goal Pills */
+  .goals {
+    display: flex;
+    gap: 8px;
+    padding: 0 24px 24px;
+    flex-wrap: wrap;
+  }
+  .goal-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .goal-pill .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+  }
+
+  /* Tab Nav */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 24px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding-top: 16px;
+  }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.25s;
+    color: var(--text3);
+    background: none;
+    border: none;
+    letter-spacing: 0.3px;
+  }
+  .tab.active {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 20px rgba(108,99,255,0.4);
+  }
+
+  /* Sections */
+  .section { display: none; padding: 0 24px; }
+  .section.active { display: block; }
+
+  /* Day Selector */
+  .day-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+  }
+  .day-scroll::-webkit-scrollbar { display: none; }
+  .day-btn {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 58px;
+  }
+  .day-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(108,99,255,0.35);
+  }
+  .day-btn.rest { border-color: transparent; background: var(--surface); }
+  .day-btn .day-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+  .day-btn.active .day-label { color: rgba(255,255,255,0.7); }
+  .day-btn .day-icon { font-size: 18px; }
+  .day-btn .day-tag {
+    font-size: 9px;
+    margin-top: 3px;
+    color: var(--text3);
+    font-weight: 500;
+  }
+  .day-btn.active .day-tag { color: rgba(255,255,255,0.6); }
+  .day-btn.veg-day .day-icon::after { content: '🌿'; font-size: 10px; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .card.purple::before { background: linear-gradient(90deg, var(--accent), #a78bfa); }
+  .card.green::before { background: linear-gradient(90deg, var(--accent3), #06d6a0); }
+  .card.orange::before { background: linear-gradient(90deg, var(--accent4), #ffd200); }
+  .card.pink::before { background: linear-gradient(90deg, var(--accent2), #f093fb); }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    font-weight: 600;
+  }
+  .badge-green { background: rgba(67,233,123,0.15); color: var(--accent3); }
+  .badge-orange { background: rgba(247,151,30,0.15); color: var(--accent4); }
+  .badge-purple { background: rgba(108,99,255,0.15); color: var(--accent); }
+  .badge-pink { background: rgba(255,101,132,0.15); color: var(--accent2); }
+
+  /* Meal Items */
+  .meal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .meal-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .meal-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .meal-info { flex: 1; }
+  .meal-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: var(--text);
+  }
+  .meal-detail {
+    font-size: 11px;
+    color: var(--text2);
+    line-height: 1.4;
+  }
+  .meal-protein {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent3);
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  /* Exercise Items */
+  .exercise-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: rgba(108,99,255,0.15);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .ex-info { flex: 1; }
+  .ex-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .ex-detail { font-size: 11px; color: var(--text2); }
+  .ex-sets {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent4);
+  }
+
+  /* Stats Row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 12px;
+    text-align: center;
+  }
+  .stat-value {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .stat-label { font-size: 10px; color: var(--text2); font-weight: 500; letter-spacing: 0.5px; }
+
+  /* Veg badge */
+  .veg-notice {
+    background: rgba(67,233,123,0.1);
+    border: 1px solid rgba(67,233,123,0.2);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    color: var(--accent3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+
+  /* Rest day card */
+  .rest-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 18px;
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .rest-card .rest-icon { font-size: 48px; margin-bottom: 12px; }
+  .rest-card h3 {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .rest-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+  /* Tips */
+  .tip {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .tip:last-child { border-bottom: none; }
+  .tip-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .tip-text strong { color: var(--text); }
+
+  /* Bottom Nav */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 430px;
+    background: rgba(19,19,26,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 12px 0 24px;
+  }
+  .nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+    border: none;
+    background: none;
+    color: var(--text3);
+    transition: color 0.2s;
+  }
+  .nav-item.active { color: var(--accent); }
+  .nav-icon { font-size: 20px; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
+
+  /* Section header */
+  .section-header {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* Progress bars */
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.8s ease;
+  }
+
+  .supplement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .supplement-item:last-child { border-bottom: none; }
+  .supp-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .supp-info { flex: 1; }
+  .supp-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+  .supp-detail { font-size: 11px; color: var(--text2); }
+  .supp-when { font-size: 11px; font-weight: 700; color: var(--accent); }
+
+  .section-sub {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Your Personal Plan</div>
+  <h1>Hari's <span>Recomp</span><br>Program</h1>
+  <p>Muscle gain · Fat loss · No belly fat</p>
+</div>
+
+<div class="goals">
+  <div class="goal-pill"><div class="dot" style="background:#6c63ff"></div>Build Muscle</div>
+  <div class="goal-pill"><div class="dot" style="background:#43e97b"></div>Lose Belly Fat</div>
+  <div class="goal-pill"><div class="dot" style="background:#f7971e"></div>Good Fats Only</div>
+  <div class="goal-pill"><div class="dot" style="background:#ff6584"></div>No Eggs</div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('diet')">🥗 Diet</button>
+  <button class="tab" onclick="showSection('exercise')">💪 Exercise</button>
+  <button class="tab" onclick="showSection('overview')">📊 Overview</button>
+</div>
+
+<!-- DIET SECTION -->
+<div class="section active" id="diet">
+  <div class="day-scroll" id="dietDays"></div>
+  <div id="dietContent"></div>
+</div>
+
+<!-- EXERCISE SECTION -->
+<div class="section" id="exercise">
+  <div class="day-scroll" id="exDays"></div>
+  <div id="exContent"></div>
+</div>
+
+<!-- OVERVIEW SECTION -->
+<div class="section" id="overview">
+  <p class="section-sub">Your weekly targets and key metrics for body recomposition.</p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-value" style="color:#6c63ff">120<span style="font-size:14px">g</span></div>
+      <div class="stat-label">Daily Protein</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:#43e97b">5</div>
+      <div class="stat-label">Gym Days</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" style="color:#f7971e">2</div>
+      <div class="stat-label">Veg Days</div>
+    </div>
+  </div>
+
+  <div class="card purple">
+    <div class="card-header">
+      <div class="card-title">💊 Daily Supplements</div>
+    </div>
+    <div class="supplement-item">
+      <div class="supp-icon">⚡</div>
+      <div class="supp-info">
+        <div class="supp-name">Creatine Monohydrate</div>
+        <div class="supp-detail">5g — mix into protein shake</div>
+      </div>
+      <div class="supp-when">Post gym</div>
+    </div>
+    <div class="supplement-item">
+      <div class="supp-icon">☀️</div>
+      <div class="supp-info">
+        <div class="supp-name">Vitamin D3 + K2</div>
+        <div class="supp-detail">2000–4000 IU D3 daily</div>
+      </div>
+      <div class="supp-when">Morning</div>
+    </div>
+    <div class="supplement-item">
+      <div class="supp-icon">🌙</div>
+      <div class="supp-info">
+        <div class="supp-name">Magnesium Glycinate</div>
+        <div class="supp-detail">300–400mg — better sleep & recovery</div>
+      </div>
+      <div class="supp-when">Before bed</div>
+    </div>
+    <div class="supplement-item">
+      <div class="supp-icon">🐟</div>
+      <div class="supp-info">
+        <div class="supp-name">Omega-3 Fish Oil</div>
+        <div class="supp-detail">1–2g EPA/DHA — reduces inflammation</div>
+      </div>
+      <div class="supp-when">With meal</div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-header">
+      <div class="card-title">📈 Protein Targets</div>
+    </div>
+    <div style="padding: 4px 0">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--text2)">Chicken/Fish (meals)</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent3)">50–60g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:50%;background:var(--accent3)"></div></div>
+    </div>
+    <div style="padding: 10px 0 4px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--text2)">Protein Shake</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent3)">25–30g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:25%;background:var(--accent3)"></div></div>
+    </div>
+    <div style="padding: 10px 0 4px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--text2)">Dal / Quinoa / Moong</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent3)">20–25g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:20%;background:var(--accent3)"></div></div>
+    </div>
+    <div style="padding: 10px 0 4px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:12px;color:var(--text2)">Curd / Yogurt</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent3)">10–15g</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:12%;background:var(--accent3)"></div></div>
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-header">
+      <div class="card-title">⚠️ Key Rules</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🍚</div>
+      <div class="tip-text"><strong>No rice at dinner</strong> — eat carbs mainly at lunch and pre/post workout</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">💧</div>
+      <div class="tip-text"><strong>3–4 litres water daily</strong> — especially on gym days</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🌙</div>
+      <div class="tip-text"><strong>7–8 hrs sleep</strong> — muscle is built at rest, not in the gym</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">🚫</div>
+      <div class="tip-text"><strong>Avoid:</strong> late night rice, sugary chai, fruit juices, excess cashews</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📱</div>
+      <div class="tip-text"><strong>Track Oura Readiness</strong> — below 70, go easy. Above 85, push hard</div>
+    </div>
+  </div>
+
+  <div class="card pink">
+    <div class="card-header">
+      <div class="card-title">🗓️ Timeline</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📅</div>
+      <div class="tip-text"><strong>Weeks 1–4:</strong> Strength adaptation, energy improving, scale may not change much</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📅</div>
+      <div class="tip-text"><strong>Weeks 5–8:</strong> Visible muscle definition starting, belly flatter</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📅</div>
+      <div class="tip-text"><strong>Weeks 9–16:</strong> Clear body recomposition results visible</div>
+    </div>
+    <div class="tip">
+      <div class="tip-icon">📅</div>
+      <div class="tip-text"><strong>Month 4–6:</strong> Significant transformation if consistent</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const dayIcons = ['🌿','🍗','🍗','🌿','🍗','🍗','😴'];
+const dayTags = ['Veg','Gym','Gym','Veg','Gym','Gym','Rest'];
+const isVeg = [true,false,false,true,false,false,false];
+const isRest = [false,false,false,false,false,false,true];
+
+const dietData = [
+  // Monday - Veg
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🍲', name: 'Lunch', detail: 'Quinoa (1 cup) + paneer curry (100g) + dal + yogurt', protein: '30g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Apple or guava + green tea', protein: '1g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '2 green moong dal dosa + raita + sabzi', protein: '22g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd or 1 tbsp peanut butter', protein: '8g' },
+    ]
+  },
+  // Tuesday - Non-Veg Gym
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🍗', name: 'Lunch', detail: 'Quinoa + grilled chicken (200g) + dal + yogurt', protein: '55g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Banana or papaya + green tea', protein: '2g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '1 roti + chicken curry (150g) + sabzi + curd', protein: '40g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd', protein: '8g' },
+    ]
+  },
+  // Wednesday - Non-Veg Gym
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🐟', name: 'Lunch', detail: 'Quinoa + grilled fish (200g) + dal + yogurt', protein: '55g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Apple or guava + green tea', protein: '1g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '2 green moong dal dosa + fish curry (150g) + raita', protein: '45g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd or peanut butter', protein: '8g' },
+    ]
+  },
+  // Thursday - Veg
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🍲', name: 'Lunch', detail: 'Quinoa + chana curry (200g) + dal + yogurt', protein: '32g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Banana + green tea', protein: '2g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '2 green moong dal dosa + paneer bhurji + sabzi', protein: '28g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd', protein: '8g' },
+    ]
+  },
+  // Friday - Non-Veg Gym
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🍗', name: 'Lunch', detail: 'Quinoa + grilled chicken (200g) + dal + yogurt', protein: '55g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Apple or papaya + green tea', protein: '1g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '1 roti + goat curry (150g) + sabzi + curd', protein: '42g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd', protein: '8g' },
+    ]
+  },
+  // Saturday - Non-Veg Gym
+  {
+    meals: [
+      { time: '7:30am', icon: '🌅', name: 'Wake Up', detail: '500ml warm water + 10g chia seeds soaked', protein: '2g' },
+      { time: '8:15am', icon: '🍌', name: 'Pre-Workout', detail: '1 banana + 1 roti with peanut butter', protein: '8g' },
+      { time: '10:45am', icon: '🥤', name: 'Post-Workout Shake', detail: 'Whey protein (25–30g) + 5g creatine', protein: '28g' },
+      { time: '11:00am', icon: '☕', name: 'Coffee + Nuts', detail: '4–5 cashews, 3 walnuts, 2 dates', protein: '5g' },
+      { time: '1:30pm', icon: '🐟', name: 'Lunch', detail: 'Quinoa + grilled fish (200g) + dal + yogurt', protein: '55g' },
+      { time: '4:30pm', icon: '🍎', name: 'Snack', detail: 'Guava or watermelon + green tea', protein: '1g' },
+      { time: '8:00pm', icon: '🌙', name: 'Dinner', detail: '1 roti + chicken/fish curry (150g) + sabzi + curd', protein: '42g' },
+      { time: '10:00pm', icon: '🥛', name: 'Before Bed', detail: '150g curd', protein: '8g' },
+    ]
+  },
+  // Sunday - Rest
+  { meals: [] }
+];
+
+const exerciseData = [
+  // Monday - Push
+  {
+    label: 'Push Day', color: 'purple',
+    exercises: [
+      { name: 'Barbell Bench Press', detail: 'Chest — compound movement', sets: '4×8' },
+      { name: 'Incline Dumbbell Press', detail: 'Upper chest', sets: '3×10' },
+      { name: 'Overhead Press (DB)', detail: 'Shoulders', sets: '4×8' },
+      { name: 'Lateral Raises', detail: 'Side delts', sets: '3×15' },
+      { name: 'Tricep Pushdowns', detail: 'Cable or band', sets: '3×12' },
+      { name: 'Overhead Tricep Ext.', detail: 'Long head tricep', sets: '3×12' },
+    ]
+  },
+  // Tuesday - Pull
+  {
+    label: 'Pull Day', color: 'green',
+    exercises: [
+      { name: 'Deadlifts', detail: 'Full back + posterior chain', sets: '4×6' },
+      { name: 'Pull-ups / Lat Pulldown', detail: 'Wide back', sets: '4×8' },
+      { name: 'Seated Cable Rows', detail: 'Mid back thickness', sets: '3×10' },
+      { name: 'Face Pulls', detail: 'Rear delts + rotator cuff', sets: '3×15' },
+      { name: 'Barbell Bicep Curls', detail: 'Compound curl', sets: '3×10' },
+      { name: 'Hammer Curls', detail: 'Brachialis + forearm', sets: '3×12' },
+    ]
+  },
+  // Wednesday - Legs
+  {
+    label: 'Leg Day', color: 'orange',
+    exercises: [
+      { name: 'Barbell Back Squats', detail: 'King of leg exercises', sets: '4×8' },
+      { name: 'Romanian Deadlifts', detail: 'Hamstrings + glutes', sets: '3×10' },
+      { name: 'Leg Press', detail: 'Quad volume', sets: '4×12' },
+      { name: 'Leg Curls', detail: 'Hamstring isolation', sets: '3×12' },
+      { name: 'Calf Raises', detail: 'Standing, full range', sets: '4×15' },
+      { name: 'Plank / Ab Circuit', detail: '3 rounds core work', sets: '3×45s' },
+    ]
+  },
+  // Thursday - Rest
+  { label: 'Rest Day', color: '', exercises: [] },
+  // Friday - Upper Body
+  {
+    label: 'Upper Body', color: 'pink',
+    exercises: [
+      { name: 'Incline Bench Press', detail: 'Upper chest focus', sets: '4×8' },
+      { name: 'Dumbbell Rows', detail: 'Back + biceps', sets: '4×10' },
+      { name: 'Arnold Press', detail: 'Full shoulder development', sets: '3×10' },
+      { name: 'Cable Flyes', detail: 'Chest isolation', sets: '3×12' },
+      { name: 'EZ Bar Curls', detail: 'Biceps', sets: '3×12' },
+      { name: 'Skull Crushers', detail: 'Triceps', sets: '3×12' },
+    ]
+  },
+  // Saturday - Full Body
+  {
+    label: 'Full Body + Core', color: 'purple',
+    exercises: [
+      { name: 'Goblet Squats', detail: 'Warm-up compound', sets: '3×12' },
+      { name: 'Dumbbell Chest Press', detail: 'Horizontal push', sets: '3×10' },
+      { name: 'Single-Arm DB Row', detail: 'Unilateral pull', sets: '3×10' },
+      { name: 'Lunges', detail: 'Legs + balance', sets: '3×12' },
+      { name: 'Hanging Leg Raises', detail: 'Lower abs', sets: '3×15' },
+      { name: 'Russian Twists', detail: 'Obliques + core', sets: '3×20' },
+    ]
+  },
+  // Sunday - Rest
+  { label: 'Rest Day', color: '', exercises: [] }
+];
+
+let currentDietDay = 0;
+let currentExDay = 0;
+
+function buildDayButtons(containerId, activeDay, clickFn) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  days.forEach((d, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'day-btn' + (i === activeDay ? ' active' : '') + (isVeg[i] ? ' veg-day' : '') + (isRest[i] ? ' rest' : '');
+    btn.innerHTML = `<div class="day-label">${d}</div><div class="day-icon">${dayIcons[i]}</div><div class="day-tag">${dayTags[i]}</div>`;
+    btn.onclick = () => clickFn(i);
+    container.appendChild(btn);
+  });
+}
+
+function renderDiet(dayIdx) {
+  currentDietDay = dayIdx;
+  buildDayButtons('dietDays', dayIdx, renderDiet);
+  const container = document.getElementById('dietContent');
+  const data = dietData[dayIdx];
+
+  if (isRest[dayIdx]) {
+    container.innerHTML = `
+      <div class="rest-card">
+        <div class="rest-icon">😴</div>
+        <h3>Rest & Recover</h3>
+        <p>Focus on hydration and clean eating. Keep protein high, avoid overeating. Let your muscles repair and grow.</p>
+      </div>
+      <div class="card green">
+        <div class="card-header"><div class="card-title">💧 Sunday Focus</div></div>
+        <div class="tip"><div class="tip-icon">🥗</div><div class="tip-text"><strong>Light meals</strong> — dal, sabzi, roti, curd</div></div>
+        <div class="tip"><div class="tip-icon">💧</div><div class="tip-text"><strong>3L water minimum</strong> — prepare for Monday gym</div></div>
+        <div class="tip"><div class="tip-icon">🛌</div><div class="tip-text"><strong>Sleep 8 hours</strong> — this is when muscle grows</div></div>
+      </div>`;
+    return;
+  }
+
+  let totalProtein = data.meals.reduce((sum, m) => sum + parseInt(m.protein), 0);
+  let vegHtml = isVeg[dayIdx] ? `<div class="veg-notice">🌿 Vegetarian Day — No chicken, fish, or eggs today</div>` : '';
+
+  let mealsHtml = data.meals.map((m, i) => `
+    <div class="meal-item">
+      <div class="meal-icon">${m.icon}</div>
+      <div class="meal-info">
+        <div class="meal-name">${m.name} <span style="font-size:10px;color:var(--text3);font-weight:400">${m.time}</span></div>
+        <div class="meal-detail">${m.detail}</div>
+      </div>
+      <div class="meal-protein">${m.protein}</div>
+    </div>`).join('');
+
+  container.innerHTML = `
+    ${vegHtml}
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent3)">${totalProtein}<span style="font-size:12px">g</span></div>
+        <div class="stat-label">Protein</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent)">${data.meals.length}</div>
+        <div class="stat-label">Meals</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent4)">${isVeg[dayIdx] ? '🌿' : '🍗'}</div>
+        <div class="stat-label">${isVeg[dayIdx] ? 'Veg' : 'Non-Veg'}</div>
+      </div>
+    </div>
+    <div class="card ${isVeg[dayIdx] ? 'green' : 'purple'}">
+      <div class="card-header">
+        <div class="card-title">🍽️ ${days[dayIdx]} Meal Plan</div>
+        <div class="card-badge ${isVeg[dayIdx] ? 'badge-green' : 'badge-purple'}">${isVeg[dayIdx] ? 'Veg' : 'Non-Veg'}</div>
+      </div>
+      ${mealsHtml}
+    </div>`;
+}
+
+function renderExercise(dayIdx) {
+  currentExDay = dayIdx;
+  buildDayButtons('exDays', dayIdx, renderExercise);
+  const container = document.getElementById('exContent');
+  const data = exerciseData[dayIdx];
+
+  if (data.exercises.length === 0) {
+    const isThurs = dayIdx === 3;
+    container.innerHTML = `
+      <div class="rest-card">
+        <div class="rest-icon">${isThurs ? '🧘' : '🛌'}</div>
+        <h3>${isThurs ? 'Active Recovery' : 'Full Rest Day'}</h3>
+        <p>${isThurs ? 'Light walk, stretching, or yoga. Keep moving but no weights today.' : 'Complete rest. Sleep well, eat clean, let your body rebuild.'}</p>
+      </div>
+      ${isThurs ? `<div class="card orange">
+        <div class="card-header"><div class="card-title">🧘 Recovery Options</div></div>
+        <div class="tip"><div class="tip-icon">🚶</div><div class="tip-text"><strong>20–30 min walk</strong> — promotes blood flow and recovery</div></div>
+        <div class="tip"><div class="tip-icon">🧘</div><div class="tip-text"><strong>Light yoga or stretching</strong> — hip flexors, hamstrings, shoulders</div></div>
+        <div class="tip"><div class="tip-icon">🏃</div><div class="tip-text"><strong>Optional 20 min easy run</strong> — keep your cardio base from half marathon</div></div>
+      </div>` : ''}`;
+    return;
+  }
+
+  const colorMap = { purple: 'purple', green: 'green', orange: 'orange', pink: 'pink' };
+  const exHtml = data.exercises.map((e, i) => `
+    <div class="exercise-item">
+      <div class="ex-num">${i+1}</div>
+      <div class="ex-info">
+        <div class="ex-name">${e.name}</div>
+        <div class="ex-detail">${e.detail}</div>
+      </div>
+      <div class="ex-sets">${e.sets}</div>
+    </div>`).join('');
+
+  container.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent)">${data.exercises.length}</div>
+        <div class="stat-label">Exercises</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent3)">60<span style="font-size:12px">m</span></div>
+        <div class="stat-label">Duration</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" style="color:var(--accent4)">💪</div>
+        <div class="stat-label">${data.label}</div>
+      </div>
+    </div>
+    <div class="card ${data.color}">
+      <div class="card-header">
+        <div class="card-title">🏋️ ${data.label}</div>
+        <div class="card-badge badge-${data.color === 'green' ? 'green' : data.color === 'orange' ? 'orange' : data.color === 'pink' ? 'pink' : 'purple'}">${days[dayIdx]}</div>
+      </div>
+      ${exHtml}
+    </div>
+    <div class="card orange">
+      <div class="card-header"><div class="card-title">💡 Training Tips</div></div>
+      <div class="tip"><div class="tip-icon">🔥</div><div class="tip-text"><strong>Warm up 5–10 min</strong> before lifting — light cardio + dynamic stretches</div></div>
+      <div class="tip"><div class="tip-icon">📈</div><div class="tip-text"><strong>Progressive overload</strong> — add 2.5–5kg every 1–2 weeks when form is solid</div></div>
+      <div class="tip"><div class="tip-icon">😤</div><div class="tip-text"><strong>Rest 60–90 sec</strong> between sets for hypertrophy, 2–3 min for strength sets</div></div>
+    </div>`;
+}
+
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Init
+renderDiet(0);
+renderExercise(0);
+</script>
+</body>
+</html>
